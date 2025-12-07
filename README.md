@@ -407,14 +407,6 @@ git push origin feature/your-feature-name
 
 ---
 
-## 📞 Support & Documentation
-
-- 📖 **Full Documentation:** See `HMS_Documentation.md`
-- 🔍 **Quick Reference:** See `HMS_Quick_Reference.md`
-- 🐛 **Issue Tracker:** GitHub Issues
-- 💬 **Discussions:** GitHub Discussions
-
----
 
 ## 🚧 Future Enhancements
 
@@ -431,11 +423,6 @@ git push origin feature/your-feature-name
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License - see `LICENSE` file for details.
-
----
 
 ## 👨‍💻 Authors
 
@@ -453,40 +440,10 @@ This project is licensed under the MIT License - see `LICENSE` file for details.
 
 ---
 
-## 📞 Contact & Support
-
-- 📧 Email: [your-email@example.com]
-- 🐙 GitHub: [github.com/yourusername](https://github.com/yourusername)
-- 💼 LinkedIn: [Your LinkedIn Profile]
-
----
 
 ## 🌟 Star This Project
 
 If you find this project useful, please give it a ⭐ on GitHub!
-
----
-
-## 📋 Changelog
-
-### Version 1.0.0 (Current)
-- ✅ Initial release
-- ✅ All core features implemented
-- ✅ Deployed on Render
-- ✅ Full documentation
-
----
-
-**Last Updated:** December 7, 2025
-
----
-
-## Quick Links
-
-- 🌐 [Live Application](https://hospital-management-system.onrender.com)
-- 📚 [Full Documentation](./HMS_Documentation.md)
-- ⚡ [Quick Reference](./HMS_Quick_Reference.md)
-- 🐙 [GitHub Repository](https://github.com/yourusername/hospital-management-system)
 
 ---
 
