@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Dashboard - HMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- Header with Doctor Name -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2><i class="fas fa-user-md"></i> Welcoming Dr. {{ doctor_name }}</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <span class="badge bg-success fs-6"><i class="fas fa-circle"></i> Online</span>
+        </div>
+    </div>
+
+    <!-- Today's Appointments Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-calendar-day"></i> Today's Appointments
+                </div>
+                <div class="card-body">
+                    {% if today_appointments %}
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Patient Name</th>
+                                    <th>Time</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in today_appointments %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><strong>{{ appointment.patient.user.name }}</strong></td>
+                                    <td><span class="badge bg-warning">{{ appointment.time }}</span></td>
+                                    <td>{{ appointment.reason[:30] }}...</td>
+                                    <td><span class="badge bg-success">Booked</span></td>
+                                    <td>
+                                        <a href="{{ url_for('main.complete_appointment', appointment_id=appointment.id) }}" class="btn btn-sm btn-success">
+                                            <i class="fas fa-check"></i> Complete
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No appointments today.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Patient History & Assigned Patients Section -->
+    <div class="row mb-4">
+        <!-- Update Patient History Form -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <i class="fas fa-edit"></i> Update Patient History
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('main.doctor_dashboard') }}" class="needs-validation">
+                        <div class="mb-3">
+                            <label for="patientSelect" class="form-label">Select Patient</label>
+                            <select class="form-select" id="patientSelect" name="patient_id">
+                                <option selected disabled>Choose patient...</option>
+                                {% for patient in patients %}
+                                <option value="{{ patient.id }}">{{ patient.user.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="diagnosis" class="form-label">Diagnosis</label>
+                            <textarea class="form-control" id="diagnosis" name="diagnosis" rows="2" placeholder="Enter diagnosis"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="prescription" class="form-label">Prescription</label>
+                            <textarea class="form-control" id="prescription" name="prescription" rows="2" placeholder="Enter prescription"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="2" placeholder="Additional notes"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+                            <i class="fas fa-save"></i> Update
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assigned Patients -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-users"></i> Assigned Patients
+                </div>
+                <div class="card-body">
+                    {% if patients %}
+                    <div class="list-group">
+                        {% for patient in patients %}
+                        <a href="{{ url_for('main.patient_history', patient_id=patient.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1"><i class="fas fa-user"></i> {{ patient.user.name }}</h6>
+                                <small><span class="badge bg-primary">{{ patient.appointments|length }} Apt.</span></small>
+                            </div>
+                            <p class="mb-1"><small>{{ patient.user.email }}</small></p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No patients assigned yet.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient History Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-file-medical"></i> Patient History
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Date/Time</th>
+                                    <th>Appointment Reason</th>
+                                    <th>Diagnosis</th>
+                                    <th>Prescription</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if upcoming_appointments %}
+                                    {% for appointment in upcoming_appointments %}
+                                    <tr>
+                                        <td><strong>{{ appointment.patient.user.name }}</strong></td>
+                                        <td>
+                                            {{ appointment.date.strftime('%d-%m-%Y') }}<br>
+                                            <small class="text-muted">{{ appointment.time }}</small>
+                                        </td>
+                                        <td>{{ appointment.reason }}</td>
+                                        <td>
+                                            {% if appointment.treatment %}
+                                                {{ appointment.treatment.diagnosis[:40] }}...
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if appointment.treatment %}
+                                                {{ appointment.treatment.prescription[:40] }}...
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">No upcoming appointments</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor's Availability Section -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <i class="fas fa-clock"></i> Doctor's Availability
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Morning<br><small>(09:00-12:00)</small></th>
+                                    <th class="text-center">Afternoon<br><small>(02:00-05:00)</small></th>
+                                    <th class="text-center">Evening<br><small>(05:00-08:00)</small></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold">2025-12-06 (Sat)</td>
+                                    <td class="text-center"><span class="badge bg-success">09:00-12:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">02:00-05:00</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">2025-12-07 (Sun)</td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">2025-12-08 (Mon)</td>
+                                    <td class="text-center"><span class="badge bg-success">09:00-12:00</span></td>
+                                    <td class="text-center"><span class="badge bg-warning">02:00-05:00</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">2025-12-09 (Tue)</td>
+                                    <td class="text-center"><span class="badge bg-success">09:00-12:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">02:00-05:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">05:00-08:00</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">2025-12-10 (Wed)</td>
+                                    <td class="text-center"><span class="badge bg-success">09:00-12:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">02:00-05:00</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">OFF</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">2025-12-11 (Thu)</td>
+                                    <td class="text-center"><span class="badge bg-success">09:00-12:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">02:00-05:00</span></td>
+                                    <td class="text-center"><span class="badge bg-success">05:00-08:00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-secondary" disabled>
+                            <i class="fas fa-edit"></i> Edit Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Action Buttons -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <a href="{{ url_for('main.doctor_appointments') }}" class="btn btn-primary">
+                <i class="fas fa-calendar-alt"></i> View All Appointments
+            </a>
+            <a href="{{ url_for('main.view_doctor_patients') }}" class="btn btn-info">
+                <i class="fas fa-users"></i> My Patients
+            </a>
+            <a href="{{ url_for('main.doctor_dashboard') }}" class="btn btn-secondary">
+                <i class="fas fa-refresh"></i> Refresh
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

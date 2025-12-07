@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System - Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0f172a;
+            --accent: #fbbf24;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Landing Page Container */
+        .landing-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)"/></svg>');
+            background-attachment: fixed;
+            flex: 1;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #3b82f6;
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: #10b981;
+            border-radius: 50%;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: #fbbf24;
+            border-radius: 50%;
+            top: 50%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        /* Content Container */
+        .landing-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Logo Animation */
+        .logo-container {
+            margin-bottom: 40px;
+            animation: slideInDown 1s ease-out;
+        }
+
+        .hms-icon {
+            font-size: 80px;
+            color: var(--accent);
+            text-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+            animation: pulse-icon 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Main Heading */
+        .landing-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .landing-heading .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Subheading */
+        .landing-subheading {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-weight: 300;
+            animation: slideInUp 1s ease-out 0.4s both;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: slideInUp 0.6s ease-out both;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.6s; }
+        .feature-card:nth-child(2) { animation-delay: 0.8s; }
+        .feature-card:nth-child(3) { animation-delay: 1s; }
+        .feature-card:nth-child(4) { animation-delay: 1.2s; }
+
+        .feature-card:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 1.2s both;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: white;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .btn-learn {
+            background: transparent;
+            color: white;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-learn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            color: white;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* About Section */
+        .about-section {
+            display: none;
+            min-height: 100vh;
+            padding: 60px 20px;
+            background: white;
+            color: var(--secondary);
+        }
+
+        .about-section.show {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .about-card {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .about-card h3 {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-credits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .footer-divider {
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+            margin: 15px auto;
+            border-radius: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .landing-heading {
+                font-size: 2rem;
+            }
+
+            .landing-subheading {
+                font-size: 1rem;
+            }
+
+            .hms-icon {
+                font-size: 50px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn-login, .btn-learn {
+                width: 100%;
+            }
+
+            .about-title {
+                font-size: 1.8rem;
+            }
+
+            footer p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Animation Classes */
+        .slideInDown {
+            animation: slideInDown 1s ease-out;
+        }
+
+        .slideInUp {
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-container" id="landingPage">
+        <div class="animated-bg">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+
+        <div class="landing-content">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="hms-icon">
+                    <i class="fas fa-hospital"></i>
+                </div>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="landing-heading">
+                Welcome to <span class="highlight">HMS</span>
+            </h1>
+
+            <!-- Subheading -->
+            <p class="landing-subheading">
+                Modern Hospital Management System for seamless patient care, appointment scheduling, and medical records
+            </p>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="feature-title">Doctor Management</h3>
+                    <p class="feature-text">Manage doctors, specializations, and schedules efficiently</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Patient Care</h3>
+                    <p class="feature-text">Track patient records and medical history securely</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Appointments</h3>
+                    <p class="feature-text">Easy booking and management of appointments</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Secure & Reliable</h3>
+                    <p class="feature-text">Enterprise-grade security for sensitive data</p>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="cta-buttons">
+                <a href="/login" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login Now
+                </a>
+                <button class="btn-learn" onclick="scrollToAbout()">
+                    <i class="fas fa-arrow-down"></i> Learn More
+                </button>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="color: white; font-size: 1.5rem;"></i>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section" id="aboutSection">
+        <div class="about-container">
+            <h2 class="about-title">Why Choose HMS?</h2>
+
+            <div class="about-grid">
+                <div class="about-card">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Fast & Efficient</h3>
+                    <p>Streamline operations and reduce administrative burden</p>
+                </div>
+
+                <div class="about-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Data Analytics</h3>
+                    <p>Comprehensive insights into hospital operations and patient care</p>
+                </div>
+
+                <div class="about-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access from any device, anywhere, anytime</p>
+                </div>
+
+                <div class="about-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock technical support for your peace of mind</p>
+                </div>
+
+                <div class="about-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>HIPAA Compliant</h3>
+                    <p>Meets all healthcare compliance and security standards</p>
+                </div>
+
+                <div class="about-card">
+                    <i class="fas fa-users-cog"></i>
+                    <h3>Multi-Role System</h3>
+                    <p>Customized access for Admin, Doctors, and Patients</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="/login" class="btn-login" style="margin-right: 20px;">
+                    <i class="fas fa-sign-in-alt"></i> Get Started
+                </a>
+                <button class="btn-learn" onclick="scrollToTop()">
+                    <i class="fas fa-arrow-up"></i> Back to Top
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-credits">
+            <p><strong>Hospital Management System (HMS)</strong></p>
+            <div class="footer-divider"></div>
+            {% include '_footer_credits.html' %}
+            <p style="margin-top: 15px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">
+                © 2025 HMS. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll to about section
+        function scrollToAbout() {
+            const aboutSection = document.getElementById('aboutSection');
+            aboutSection.classList.add('show');
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Scroll back to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            document.getElementById('aboutSection').classList.remove('show');
+        }
+
+        // Trigger animations on page load
+        window.addEventListener('load', () => {
+            const landingContent = document.querySelector('.landing-content');
+            landingContent.style.opacity = '1';
+        });
+
+        // Auto-play animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add initial animation triggers
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.6 + (index * 0.2)}s`;
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
